@@ -1,0 +1,102 @@
+{
+  "pipeline_version": "2026.03.0",
+  "output_root": "outputs",
+  "countries": ["France", "England", "Scotland", "Wales"],
+  "uk_include_ni_from_official_flow": true,
+  "thresholds": {
+    "auto_merge_threshold": 0.85,
+    "suggest_merge_threshold": 0.6
+  },
+  "sources": {
+    "ffsa": [
+      {
+        "source_url": "https://www.ffsa.org/pratique/karting/circuits",
+        "source_record_id": "ffsa-001",
+        "venue_name": "Kartland Paris Outdoor",
+        "country": "France",
+        "subdivision": "Île-de-France",
+        "locality": "Paris",
+        "address_raw": "Route de la piste, Paris",
+        "website": "https://kartland.example.fr",
+        "lat": 48.8,
+        "lon": 2.25,
+        "snippet": "Piste de karting outdoor permanente homologuée FFSA"
+      }
+    ],
+    "motorsport_uk": [
+      {
+        "source_url": "https://www.motorsportuk.org/clubs-organisers/find-a-venue/",
+        "source_record_id": "msuk-100",
+        "venue_name": "Shenington Kart Club",
+        "country": "England",
+        "subdivision": "Oxfordshire",
+        "locality": "Banbury",
+        "website": "https://sheningtonkrc.co.uk",
+        "lat": 52.08,
+        "lon": -1.395,
+        "snippet": "Outdoor kart circuit operating race calendar"
+      }
+    ],
+    "abkc": [
+      {
+        "source_url": "https://www.abkc.org.uk/tracks/",
+        "source_record_id": "abkc-010",
+        "venue_name": "Shenington Kart Club",
+        "country": "England",
+        "subdivision": "Oxfordshire",
+        "locality": "Banbury",
+        "snippet": "ABKC member outdoor kart track"
+      }
+    ],
+    "osm": [
+      {
+        "source_url": "https://overpass-api.de/api/interpreter",
+        "osm_id": 123456,
+        "osm_type": "way",
+        "name": "Shenington Kart Club",
+        "country": "England",
+        "locality": "Banbury",
+        "lat": 52.081,
+        "lon": -1.394,
+        "tags": {
+          "highway": "raceway",
+          "sport": "karting"
+        }
+      },
+      {
+        "source_url": "https://overpass-api.de/api/interpreter",
+        "osm_id": 888888,
+        "osm_type": "way",
+        "name": "Example Indoor Karting",
+        "country": "Wales",
+        "locality": "Cardiff",
+        "lat": 51.48,
+        "lon": -3.18,
+        "tags": {
+          "sport": "karting",
+          "indoor": "yes"
+        }
+      }
+    ],
+    "venue_websites": [
+      {
+        "source_url": "https://sheningtonkrc.co.uk/contact",
+        "source_record_id": "web-1",
+        "venue_name": "Shenington Kart Club",
+        "country": "England",
+        "locality": "Banbury",
+        "address_raw": "Shenington Airfield, Banbury",
+        "phone": "+44 123456",
+        "snippet": "Outdoor circuit address and contacts"
+      },
+      {
+        "source_url": "https://event-only.example.com",
+        "source_record_id": "web-2",
+        "venue_name": "Pop-up Kart Festival",
+        "country": "Scotland",
+        "locality": "Edinburgh",
+        "snippet": "Temporary event-only karting layout"
+      }
+    ]
+  }
+}
