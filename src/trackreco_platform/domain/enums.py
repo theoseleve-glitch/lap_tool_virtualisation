@@ -1,4 +1,12 @@
-from enum import StrEnum
+try:
+    from enum import StrEnum
+except ImportError:  # py<3.11
+    from enum import Enum
+
+    class StrEnum(str, Enum):
+        pass
+
+
 
 
 class VenueStatus(StrEnum):
@@ -32,6 +40,14 @@ class LayoutStatus(StrEnum):
     UNPUBLISHED = "unpublished"
 
 
+class ReviewStatus(StrEnum):
+    DRAFT = "draft"
+    IN_REVIEW = "in_review"
+    CHANGES_REQUESTED = "changes_requested"
+    APPROVED = "approved"
+    REJECTED = "rejected"
+
+
 class JobStatus(StrEnum):
     QUEUED = "queued"
     RUNNING = "running"
@@ -46,6 +62,7 @@ class JobType(StrEnum):
 
 
 class ReviewActionType(StrEnum):
+    SUBMIT_FOR_REVIEW = "submit_for_review"
     APPROVE = "approve"
     REJECT = "reject"
     REQUEST_CHANGES = "request_changes"
@@ -54,3 +71,4 @@ class ReviewActionType(StrEnum):
 class PublishAction(StrEnum):
     PUBLISH = "publish"
     UNPUBLISH = "unpublish"
+    ROLLBACK = "rollback"

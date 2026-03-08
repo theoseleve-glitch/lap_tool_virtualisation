@@ -28,6 +28,7 @@ from trackreco_platform.domain.enums import (
     LayoutStatus,
     PublishAction,
     ReviewActionType,
+    ReviewStatus,
     VenueStatus,
 )
 
@@ -121,6 +122,7 @@ class LayoutVersion(Base, AuditMixin):
     extraction_run_id: Mapped[str] = mapped_column(ForeignKey("extraction_runs.id", ondelete="RESTRICT"), nullable=False)
     version: Mapped[int] = mapped_column(Integer, nullable=False)
     status: Mapped[LayoutStatus] = mapped_column(Enum(LayoutStatus), default=LayoutStatus.DRAFT, nullable=False)
+    review_status: Mapped[ReviewStatus] = mapped_column(Enum(ReviewStatus), default=ReviewStatus.DRAFT, nullable=False)
     boundary_polygon: Mapped[str] = mapped_column(Geometry("POLYGON", srid=4326), nullable=False)
     centerline: Mapped[str] = mapped_column(Geometry("LINESTRING", srid=4326), nullable=False)
     start_finish: Mapped[str] = mapped_column(Geometry("POINT", srid=4326), nullable=False)
@@ -154,6 +156,7 @@ class PublishHistory(Base, AuditMixin):
 
     id: Mapped[str] = mapped_column(UUID(as_uuid=False), primary_key=True, default=lambda: str(uuid4()))
     layout_version_id: Mapped[str] = mapped_column(ForeignKey("layout_versions.id", ondelete="RESTRICT"), nullable=False)
+    previous_layout_version_id: Mapped[str | None] = mapped_column(ForeignKey("layout_versions.id", ondelete="RESTRICT"))
     action: Mapped[PublishAction] = mapped_column(Enum(PublishAction), nullable=False)
     reason: Mapped[str | None] = mapped_column(Text)
 
@@ -196,3 +199,14 @@ class RolePermission(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     role: Mapped[str] = mapped_column(String(40), nullable=False)
     permission: Mapped[str] = mapped_column(String(80), nullable=False)
+
+
+class AuditEvent(Base, AuditMixin):
+    __tablename__ = "audit_events"
+
+    id: Mapped[str] = mapped_column(UUID(as_uuid=False), primary_key=True, default=lambda: str(uuid4()))
+    event_type: Mapped[str] = mapped_column(String(80), nullable=False, index=True)
+    entity_type: Mapped[str] = mapped_column(String(80), nullable=False, index=True)
+    entity_id: Mapped[str] = mapped_column(String(36), nullable=False, index=True)
+    correlation_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    payload: Mapped[dict] = mapped_column(JSON, default=dict, nullable=False)
