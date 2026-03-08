@@ -7,6 +7,7 @@ export default function HomePage() {
       <ul>
         <li><Link href="/venues">Venue list</Link></li>
         <li><Link href="/jobs">Job monitoring</Link></li>
+        <li><Link href="/launcher">Track recognition launcher</Link></li>
       </ul>
     </main>
   );

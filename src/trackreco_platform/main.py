@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import ORJSONResponse
 import uvicorn
 
-from trackreco_platform.api.routes import crops, imagery, lap_contract, layouts, venues
+from trackreco_platform.api.routes import crops, imagery, lap_contract, layouts, tool, venues
 from trackreco_platform.config import settings
 from trackreco_platform.errors import DomainError
 from trackreco_platform.logging import configure_logging
@@ -17,6 +17,7 @@ app.include_router(imagery.router, prefix=settings.api_prefix)
 app.include_router(crops.router, prefix=settings.api_prefix)
 app.include_router(layouts.router, prefix=settings.api_prefix)
 app.include_router(lap_contract.router, prefix=settings.api_prefix)
+app.include_router(tool.router, prefix=settings.api_prefix)
 
 
 @app.exception_handler(DomainError)
