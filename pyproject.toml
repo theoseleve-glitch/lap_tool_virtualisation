@@ -4,24 +4,37 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "trackreco"
-version = "0.1.0"
-description = "Traceable outdoor kart venue acquisition pipeline for France and Britain"
+version = "0.2.0"
+description = "Production-grade Outdoor French Kart Track Layout Registry foundation"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-  "pandas>=2.1",
-  "httpx>=0.27",
-  "beautifulsoup4>=4.12",
-  "lxml>=5.2",
-  "python-dateutil>=2.9",
+  "fastapi>=0.115",
+  "uvicorn>=0.30",
+  "sqlalchemy>=2.0",
+  "psycopg[binary]>=3.2",
+  "alembic>=1.13",
+  "pydantic>=2.8",
+  "pydantic-settings>=2.3",
+  "python-multipart>=0.0.9",
+  "celery>=5.4",
+  "redis>=5.0",
+  "boto3>=1.35",
+  "shapely>=2.0",
+  "geoalchemy2>=0.15",
+  "python-slugify>=8.0",
+  "orjson>=3.10",
 ]
 
 [project.optional-dependencies]
-geo = ["shapely>=2.0", "geopandas>=0.14", "pyproj>=3.6"]
-test = ["pytest>=8.0"]
+test = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+]
 
 [project.scripts]
-trackreco = "trackreco.cli:main"
+trackreco-api = "trackreco_platform.main:run"
+trackreco-worker = "trackreco_platform.workers.jobs:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
