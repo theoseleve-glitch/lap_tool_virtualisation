@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     s3_region: str = "eu-west-3"
 
     log_level: str = "INFO"
+    artifact_local_root: str = "artifacts/layout_extraction"
 
 
 settings = Settings()

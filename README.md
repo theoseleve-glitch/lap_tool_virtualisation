@@ -34,3 +34,11 @@ make test
 - Explicit state machines for all long-running jobs.
 - Full auditability with created/updated user and timestamp fields.
 - Versioned imagery, crops, extraction runs, and layout versions.
+
+## Layout extraction engine
+
+Deterministic multi-stage extraction is implemented under `trackreco_platform.extraction` with persisted stage artifacts, explicit reason codes, validation rule catalog, and orchestration status files.
+
+- Config: `config/extraction_pipeline.json`
+- Artifacts: `artifacts/layout_extraction/...`
+- Docs: `docs/layout_extraction_engine.md`

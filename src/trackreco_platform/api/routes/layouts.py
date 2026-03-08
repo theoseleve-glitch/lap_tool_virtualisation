@@ -1,10 +1,16 @@
+import json
+from pathlib import Path
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from trackreco_platform.api.schemas.layout_extraction import ExtractionRequest
+from trackreco_platform.config import settings
 from trackreco_platform.db import get_db
 from trackreco_platform.domain.enums import LayoutStatus, PublishAction
 from trackreco_platform.domain.models import LayoutVersion, PublishHistory, ReviewAction, ValidationReport
+from trackreco_platform.workers.celery_app import celery_app
 
 router = APIRouter(prefix="/layouts", tags=["layouts"])
 
@@ -69,3 +75,26 @@ def unpublish(layout_version_id: str, reason: str | None = None, db: Session = D
     db.add(history)
     db.commit()
     return {"layout_version_id": layout_version_id, "status": version.status.value}
+
+
+@router.post("/extraction-runs")
+def submit_extraction(req: ExtractionRequest):
+    job = celery_app.send_task("layout.extract", args=[req.model_dump()])
+    return {"job_id": job.id, "run_id": req.run_id, "status": "queued"}
+
+
+@router.get("/extraction-runs/{run_id}")
+def extraction_status(venue_slug: str, imagery_version: int, crop_version: int, run_id: str):
+    status_path = (
+        Path(settings.artifact_local_root)
+        / venue_slug
+        / f"imagery_v{imagery_version}"
+        / f"crop_v{crop_version}"
+        / "extraction-v1"
+        / run_id
+        / "run"
+        / "status.json"
+    )
+    if not status_path.exists():
+        raise HTTPException(status_code=404, detail={"code": "run_not_found", "message": "Extraction run status not found"})
+    return json.loads(status_path.read_text())
