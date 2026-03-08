@@ -1,0 +1,44 @@
+{
+  "segmentation": {
+    "mode": "heuristic",
+    "grayscale_threshold": 140,
+    "saturation_threshold": 75,
+    "min_component_pixels": 300,
+    "closing_iterations": 2,
+    "opening_iterations": 1,
+    "ml_model_ref": null
+  },
+  "boundary": {
+    "min_area_m2": 250.0,
+    "simplify_tolerance_m": 0.7,
+    "hole_area_threshold_m2": 25.0,
+    "repair_buffer_m": 0.2
+  },
+  "centerline": {
+    "prune_min_branch_length_m": 5.0,
+    "simplify_tolerance_m": 0.6,
+    "smooth_iterations": 4,
+    "closure_tolerance_m": 2.0
+  },
+  "alternate_layout": {
+    "min_alt_score": 0.65,
+    "min_alt_length_ratio": 0.2,
+    "max_auto_splits": 1
+  },
+  "validation": {
+    "min_track_length_m": 250.0,
+    "max_track_length_m": 3500.0,
+    "min_mean_width_m": 4.0,
+    "max_mean_width_m": 15.0,
+    "max_centerline_outside_ratio": 0.002
+  },
+  "versions": {
+    "pipeline": "extraction-v1",
+    "segmentation": "heuristic-v1",
+    "boundary": "boundary-v1",
+    "centerline": "centerline-v1",
+    "alternate_layout": "alternate-v1",
+    "intelligence": "intel-v1",
+    "validation": "validation-v1"
+  }
+}
