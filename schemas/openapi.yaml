@@ -1,0 +1,78 @@
+openapi: 3.1.0
+info:
+  title: TrackReco Layout Registry API
+  version: 0.2.0
+paths:
+  /api/v1/venues:
+    get:
+      summary: List venues
+      responses:
+        '200': { description: OK }
+    post:
+      summary: Create venue
+      responses:
+        '200': { description: Created }
+        '409': { description: Duplicate slug }
+  /api/v1/venues/import:
+    post:
+      summary: Import venues CSV
+      responses:
+        '200': { description: Import report }
+  /api/v1/imagery/ingest:
+    post:
+      summary: Trigger imagery ingestion job
+      responses:
+        '200': { description: Job accepted }
+  /api/v1/imagery/jobs/{job_id}:
+    get:
+      summary: Get job status
+      parameters:
+      - name: job_id
+        in: path
+        required: true
+        schema: { type: string }
+      responses:
+        '200': { description: Job detail }
+  /api/v1/crops:
+    post:
+      summary: Create crop version
+      responses:
+        '200': { description: Crop created }
+        '400': { description: Geometry invalid }
+  /api/v1/crops/{crop_id}/activate:
+    post:
+      summary: Activate crop version
+      responses:
+        '200': { description: Crop activated }
+  /api/v1/layouts:
+    get:
+      summary: List layout versions
+      responses:
+        '200': { description: Layouts }
+  /api/v1/layouts/{layout_version_id}:
+    get:
+      summary: Layout detail
+      responses:
+        '200': { description: Detail }
+        '404': { description: Not found }
+  /api/v1/layouts/{layout_version_id}/validation:
+    get:
+      summary: Validation reports
+      responses:
+        '200': { description: Reports }
+  /api/v1/layouts/{layout_version_id}/review:
+    post:
+      summary: Store review action
+      responses:
+        '200': { description: Review recorded }
+  /api/v1/layouts/{layout_version_id}/publish:
+    post:
+      summary: Publish version
+      responses:
+        '200': { description: Published }
+        '409': { description: Already published }
+  /api/v1/layouts/{layout_version_id}/unpublish:
+    post:
+      summary: Unpublish version
+      responses:
+        '200': { description: Unpublished }
